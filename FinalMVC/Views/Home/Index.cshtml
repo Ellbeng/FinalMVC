@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>User Balance: <span id="balance"></span></h1>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        
+        $.ajax({
+            url: "/User/GetBalance", // Controller action method URL
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#balance").text(data); // Update UI with user balance
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+}
+}

@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Deposit";
+}
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form id="transactionForm">
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount"><br>
+        <select id="currency" name="currency">
+            <option value="GEL">GEL</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select><br>
+
+        <button type="button" id="btnSubmit">Submit</button>
+    </form>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        var currentUrl = window.location.href;
+      if (currentUrl === "https://localhost:44339/User/Deposit") {
+            $("#btnSubmit").click(function () {
+                    var transaction = {
+                        Amount: $("#amount").val(),
+                        PaymentType: "Deposit",
+                        Currency: $("#currency").val()
+                    };
+
+                
+                
+
+        
+                        $.ajax({
+                            url: "/User/InsertTransaction", // Controller action method URL
+                            type: "POST",
+                            dataType: "json",
+                            data:transaction,
+            
+                                    success: function (response) {
+                        
+                                        if (response.bankFormFillLink) {
+                                            // Display bank form fill link and transaction data to the user
+                                            var bankFormFillLink = response.bankFormFillLink;
+
+
+                                            console.log("response: " + response.bankFormFillLink);
+                                            console.log("Bank form fill URL: " + bankFormFillLink);
+                                            alert("ragac movida");
+                                            window.location.replace(bankFormFillLink, 'CardInformation');
+                            
+                                            // ... display bank form fill link and transaction data ...
+                                        } else {
+                                            // Handle error
+                           
+                                            alert("Error adding transaction: invalid response from server");
+                                        }
+                                    },
+                            error: function (xhr) {
+                               alert("Error adding transaction: " + xhr.responseText);
+                            }
+                       
+                        });
+        
+ 
+             });
+
+          }          else{
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                
+
+                    var transaction = {
+
+                        Id: urlParams.get('id'),
+                        Amount: urlParams.get('amount'),
+                        Status: urlParams.get('status'),
+                        PaymentType: urlParams.get('paymentType')
+                    
+
+                    };
+                    $.ajax({
+                    url: "/User/UpdateTransaction", // Controller action method URL
+                        type: "POST",
+                        dataType: "json",
+
+                        data: transaction,
+                        success: function (response) {
+                           
+                                alert("Transaction added");
+                            
+                          
+                        },
+                        error: function (xhr,textStatus, errorThrown) {
+                            alert("Error adding transaction: Transaction is already added" + errorThrown);
+                        console.log(data.currentAmount);
+                        console.log(response);
+                        }
+                    });
+
+       }
+    });
+</script>
+}
+}
