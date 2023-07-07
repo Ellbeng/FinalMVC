@@ -66,7 +66,6 @@ C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Composition.Host
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Composition.Runtime.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Composition.TypedParts.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
-C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Drawing.Common.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
@@ -288,3 +287,5 @@ C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Web.WebPages.Dep
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Web.WebPages.dll
 C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\user\Desktop\FinalMVC\FinalMVC\bin\Debug\net6.0\libman.json

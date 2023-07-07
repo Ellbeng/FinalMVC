@@ -13,6 +13,7 @@ builder.Services.AddDbContext<DBContext>(options =>
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<ITransactionService, TransactionService>();
 builder.Services.AddSingleton<IWalletService, WalletService>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 
 

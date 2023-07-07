@@ -6,9 +6,11 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
 @if (User.Identity.IsAuthenticated)
 {
     <h1>User Balance: <span id="balance"></span></h1>
+    <button id="insertTokenButton">Generate Token</button>
 
 @section scripts{
 <script>
@@ -25,6 +27,22 @@
                 console.error(error);
             }
         });
+
+
+            $("#insertTokenButton").click(function () {
+                $.ajax({
+                    url: "/Token/InsertToken",
+                    type: "POST",
+                    success: function (response) {
+                        console.log("Token inserted successfully.");
+                        
+                    },
+                    error: function () {
+                        console.log("Error inserting token.");
+                        
+                    }
+                });
+            });
     });
 </script>
 }

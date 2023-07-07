@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVCWithDapper.DBContext;
 using Newtonsoft.Json;
 using System.Net.Http;
-
-using JsonResult = Microsoft.AspNetCore.Mvc.JsonResult;
-
+using Microsoft.AspNetCore.Mvc;
 namespace FinalMVC.Controllers
 {
     public class UserController : Controller
@@ -32,6 +30,11 @@ namespace FinalMVC.Controllers
             
         }
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult History()
         {
             return View();
         }
@@ -150,6 +153,27 @@ namespace FinalMVC.Controllers
 
         }
 
+
+
+
+       
+        public JsonResult GetTransactionById()
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var transaction = _transactionService.getTransactionById(userId);
+            var formattedTransactions = transaction.Select(t => new
+            {
+
+                paymentType = t.PaymentType,
+                currency = t.Currency,
+                createDate = t.CreateDate, // Format the date here
+                status = t.Status == 3 ? "accept" : (t.Status == 1 ? "pending" : "reject"),
+                amount = t.PaymentType == "Deposit" ? t.Amount : t.Amount * (-1)
+            }) ;
+
+            return Json(new { data = formattedTransactions });
+        }
 
 
 

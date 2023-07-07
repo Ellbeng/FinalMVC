@@ -15,7 +15,7 @@ namespace FinalMVC.Services
         public Transaction InsertTransaction(Transaction transaction);
         public string GeneratetransactionFormFillLink(TransactionInfo transaction);
         public void UpdateTransaction(UpdateTransaction transaction);
-        public Transaction getTransactionById(int Id);
+        public List<History> getTransactionById(string Id);
 
     }
     public class TransactionService:ITransactionService
@@ -80,19 +80,19 @@ namespace FinalMVC.Services
         }
 
 
-        public Transaction getTransactionById(int Id)
+        public List<History> getTransactionById(string UserId)
         {
-            var sql = @"SELECT *
-                          FROM Transactions WHERE Id = @Id";
+            var sql = @"SELECT PaymentType,Currency,CONVERT(VARCHAR(10), CreateDate, 120) AS CreateDate,Status,Amount
+                          FROM Transactions WHERE UserId = @UserId order by CreateDate desc";
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", Id);
+            parameters.Add("@UserId", UserId);
 
             using (IDbConnection dbConnection = _context.Connection)
             {
 
                 dbConnection.Open();
 
-                var result = dbConnection.Query<Transaction>(sql, parameters).FirstOrDefault();
+                var result = dbConnection.Query<History>(sql, parameters).ToList();
                 return result;
 
 

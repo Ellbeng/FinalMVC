@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "History";
+}
+<table border="0" cellspacing="5" cellpadding="5">
+    <tbody>
+        <tr>
+            <td>Minimum date:</td>
+            <td><input type="text" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Maximum date:</td>
+            <td><input type="text" id="max" name="max"></td>
+        </tr>
+    </tbody>
+</table>
+<table id="transactionDataTable">
+    <thead>
+        <tr>
+            
+            <th>PaymentType</th>
+            <th>Currency</th>
+            <th>CreateDate</th>
+            <th>Status</th>
+            <th>Amount</th>
+            
+        </tr>
+    </thead>
+   
+
+</table>
+<link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdn.datatables.net/datetime/1.4.1/css/dataTables.dateTime.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+@section scripts {
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.4.1/js/dataTables.dateTime.min.js"></script>
+    <script>
+        var minDate, maxDate;
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = minDate.val();
+                var max = maxDate.val();
+                var date = new Date(data[2]);
+
+                if (
+                    (min === null && max === null) ||
+                    (min === null && date <= max) ||
+                    (min <= date && max === null) ||
+                    (min <= date && date <= max)
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        $(document).ready(function () {
+
+            minDate = new DateTime($('#min'), {
+                format: 'MMMM Do YYYY'
+            });
+            maxDate = new DateTime($('#max'), {
+                format: 'MMMM Do YYYY'
+            });
+
+            
+            var dataTable=$('#transactionDataTable').DataTable({
+               
+                "ajax": {
+                    "url": "/User/GetTransactionById",
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+                   
+                    { "data": "paymentType" },
+                    { "data": "currency" },
+                    { "data": "createDate" },
+                    { "data": "status" },
+                    { "data": "amount" }
+                    
+                ]
+            });
+            $('#min, #max').on('change', function () {
+                table.draw();
+            });
+
+        });
+    </script>
+}
